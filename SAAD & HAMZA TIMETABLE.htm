@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merged Timetable</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; text-align: center; }
+    th, td { border: 1px solid #ccc; padding: 8px; min-width: 100px; vertical-align: top; }
+    th { background: #f4f4f4; }
+    td { cursor: pointer; position: relative; }
+    .hamza-entry { background-color: #00f0ff; padding: 2px 4px; border-radius: 4px; margin: 2px; display: inline-block; }
+    .saad-entry { background-color: #00ff66; padding: 2px 4px; border-radius: 4px; margin: 2px; display: inline-block; }
+    .toolbar { margin-bottom: 15px; }
+    button { margin-right: 8px; padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .hamza-btn { background-color: #00f0ff; }
+    .saad-btn { background-color: #00ff66; }
+    .clear-btn { background-color: #ddd; }
+  </style>
+</head>
+<body>
+  <h2>Merged Timetable — Hamza & Saad</h2>
+  <div class="toolbar">
+    <button class="hamza-btn" onclick="addEntry('hamza')">Add Hamza Class</button>
+    <button class="saad-btn" onclick="addEntry('saad')">Add Saad Class</button>
+    <button class="clear-btn" onclick="clearCell()">Clear Cell</button>
+  </div>
+  <table id="timetable">
+    <tr>
+      <th>Day / Time</th>
+      <th>8:00 - 9:00</th>
+      <th>9:00 - 10:00</th>
+      <th>10:00 - 11:00</th>
+      <th>11:00 - 12:00</th>
+      <th>12:00 - 1:00</th>
+      <th>1:00 - 2:00</th>
+      <th>2:00 - 3:00</th>
+      <th>3:00 - 4:00</th>
+    </tr>
+    <tr><th>Monday</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>Tuesday</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>Wednesday</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>Thursday</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>Friday</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>Saturday</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <script>
+    let selectedCell = null;
+
+    document.querySelectorAll('#timetable td').forEach(td => {
+      td.addEventListener('click', () => {
+        if (selectedCell) selectedCell.style.outline = '';
+        selectedCell = td;
+        td.style.outline = '2px solid red';
+      });
+    });
+
+    function addEntry(type) {
+      if (!selectedCell) return;
+      let text = prompt(`Enter ${type === 'hamza' ? 'Hamza' : 'Saad'}'s class:`);
+      if (text) {
+        let span = document.createElement('div');
+        span.textContent = text;
+        span.className = type === 'hamza' ? 'hamza-entry' : 'saad-entry';
+        span.addEventListener('dblclick', () => span.remove());
+        selectedCell.appendChild(span);
+      }
+    }
+
+    function clearCell() {
+      if (selectedCell) selectedCell.innerHTML = '';
+    }
+  </script>
+</body>
+</html>
